@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,22 +7,35 @@ using System.Threading.Tasks;
 
 namespace Calculadora.Utils
 {
-    internal class MultiplyOperationHelper
+    public static class MultiplyOperationHelper
     {
-        public static IEnumerable<object[]> GetMultiplynData()
+        public static IEnumerable<object[]> GetMultiplyData()
         {
-            return new[]
+            var cs = "Host=localhost;Username=postgres;Password=Control123$;Database=operations";
+            List<object[]> tableData = new List<object[]>();
+
+            using (var connection = new NpgsqlConnection(cs))
             {
-                new object[] { 1, 2, 2 },
-                new object[] { -2, -3, 6 },
-                new object[] { -7, 3, -21 },
-                new object[] { 12, -8, -96 },
-                new object[] { 0, 1, 0 },
-                new object[] { 9, 0, 0 },
-                new object[] { -9, 0, 0 },
-                new object[] { 0, -6, 0 },
-                new object[] { 0, 0, 0 },
-            };
+                connection.Open();
+                var query = "SELECT * FROM public.\"MultiplyData\"";
+
+                var npgsqlCommand = new NpgsqlCommand(query, connection);
+
+                // here the command is  Executed
+                var dataReader = npgsqlCommand.ExecuteReader();
+
+                // here is read the columns
+                var fieldCound = dataReader.FieldCount;
+
+                while (dataReader.Read())
+                {
+                    object[] fieldValues = new object[fieldCound];
+
+                    int instaces = dataReader.GetValues(fieldValues);
+                    tableData.Add(fieldValues);
+                }
+                return tableData;
+            }
         }
     }
 }

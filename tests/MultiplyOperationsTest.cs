@@ -8,22 +8,23 @@ namespace Calculadora.tests
     public class MultiplyOperationsTest
     {
 
-        public static IEnumerable<object[]> MultiplynData
+        public static IEnumerable<object[]> MultiplyData
         {
             get
             {
-                return MultiplyOperationHelper.GetMultiplynData();
+                return MultiplyOperationHelper.GetMultiplyData();
             }
         }
 
         [TestMethod]
-        [DynamicData(nameof(MultiplynData))]
-        public void VerifyMultiplyOfTwoIntegerNumbers(int firstNumber, int secondNumber, int expectedMultiply)
+        [DynamicData(nameof(MultiplyData))]
+        public void VerifyMultiplyOfTwoIntegerNumbers(int id, string firstNumber, string secondNumber, string expectedMultiply)
         {
-            var resultOfMultiply = new Multiply(firstNumber, secondNumber).Perform();
+            var resultOfMultiply = new Multiply(int.Parse(firstNumber), int.Parse(secondNumber)).Perform();
 
-            Assert.AreEqual(expectedMultiply, resultOfMultiply, $"The Expected result of Multiply should be {expectedMultiply} But it was: {resultOfMultiply}");
+            Assert.AreEqual(int.Parse(expectedMultiply), resultOfMultiply, $"The Expected result of Multiply should be {expectedMultiply} But it was: {resultOfMultiply}");
         }
+
 
 
         [TestMethod]
