@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Calculadora.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Calculadora.tests
@@ -6,25 +7,16 @@ namespace Calculadora.tests
     [TestClass]
     public class DivideOperationsTest
     {
-
-        public static IEnumerable<object[]> AdditionData
+        public static IEnumerable<object[]> DivideData
         {
             get
             {
-                return new[]
-                {
-                    new object[] { 2, 1, 2 },
-                    new object[] { -6, -2, 3 },
-                    new object[] { -21, 3, -7 },
-                    new object[] { 12, -2, -6 },
-                    new object[] { 0, 1, 0 },
-                    new object[] { 0, -6, 0 },
-                };
+                return DivideOperationHelper.GetDivideData();
             }
         }
 
         [TestMethod]
-        [DynamicData(nameof(AdditionData))]
+        [DynamicData(nameof(DivideData))]
         public void VerifyDivideOfTwoIntegerNumbers(int firstNumber, int secondNumber, int expectedDivide)
         {
             var resultOfDivide = new Divide(firstNumber, secondNumber).Perform();

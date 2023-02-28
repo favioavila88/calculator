@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Calculadora.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Calculadora.tests
@@ -7,27 +8,16 @@ namespace Calculadora.tests
     public class MultiplyOperationsTest
     {
 
-        public static IEnumerable<object[]> AdditionData
+        public static IEnumerable<object[]> MultiplynData
         {
             get
             {
-                return new[]
-                {
-                    new object[] { 1, 2, 2 },
-                    new object[] { -2, -3, 6 },
-                    new object[] { -7, 3, -21 },
-                    new object[] { 12, -8, -96 },
-                    new object[] { 0, 1, 0 },
-                    new object[] { 9, 0, 0 },
-                    new object[] { -9, 0, 0 },
-                    new object[] { 0, -6, 0 },
-                    new object[] { 0, 0, 0 },
-                };
+                return MultiplyOperationHelper.GetMultiplynData();
             }
         }
 
         [TestMethod]
-        [DynamicData(nameof(AdditionData))]
+        [DynamicData(nameof(MultiplynData))]
         public void VerifyMultiplyOfTwoIntegerNumbers(int firstNumber, int secondNumber, int expectedMultiply)
         {
             var resultOfMultiply = new Multiply(firstNumber, secondNumber).Perform();

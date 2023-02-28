@@ -67,6 +67,10 @@
     <Compile Include="tests\MultiplyOperationsTest.cs" />
     <Compile Include="tests\SumOperationsTests.cs" />
     <Compile Include="tests\SubstractOperationsTests.cs" />
+    <Compile Include="Utils\DivideOperationHelper.cs" />
+    <Compile Include="Utils\MultiplyOperationHelper.cs" />
+    <Compile Include="Utils\SubstractOperationHelper.cs" />
+    <Compile Include="Utils\SumOperationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
