@@ -17,7 +17,7 @@ namespace Calculadora.tests
 
         [TestMethod]
         [DynamicData(nameof(DivideData))]
-        public void VerifyDivideOfTwoIntegerNumbers(int id, string firstNumber, string secondNumber, string expectedDivide)
+        public void VerifyDivideOfTwoIntegerNumbers(int id, string firstNumber, string secondNumber, string expectedDivide, string expectedUndo)
         {
             var resultOfDivide = new Divide(int.Parse(firstNumber), int.Parse(secondNumber)).Perform();
 
@@ -25,19 +25,16 @@ namespace Calculadora.tests
         }
 
         [TestMethod]
-        public void VerifyUndoOfADivideOfPositiveNumbers()
+        [DynamicData(nameof(DivideData))]
+        public void VerifyUndoOfADivideOfPositiveNumbers(int id, string firstNumber, string secondNumber, string expectedDivide, string expectedUndo)
         {
-            var expectedDivide = 2;
-            var expectedUndo = 2;
-            var firstNumber = 2;
-            var secondNumber = 1;
+            var Divide = new Divide(int.Parse(firstNumber), int.Parse(secondNumber));
 
-            var divideToTest = new Divide(firstNumber, secondNumber);
-            var resultOfDivide = divideToTest.Perform();
-            var resultOfUndo = divideToTest.Undo();
+            var resultOfDivide = Divide.Perform();
+            var resultOfUndo = Divide.Undo();
 
-            Assert.AreEqual(expectedDivide, resultOfDivide, $"The Expected result of Divide should be {expectedDivide} But it was: {resultOfDivide}");
-            Assert.AreEqual(expectedUndo, resultOfUndo, $"The Expected result of Undo in Divide should be {expectedUndo} But it was: {resultOfUndo}");
+            Assert.AreEqual(int.Parse(expectedDivide), resultOfDivide, $"The Expected result of Divide should be {expectedDivide} But it was: {resultOfDivide}");
+            Assert.AreEqual(int.Parse(expectedUndo), resultOfUndo, $"The Expected result of Undo in Divide should be {expectedUndo} But it was: {resultOfUndo}");
         }
     }
 

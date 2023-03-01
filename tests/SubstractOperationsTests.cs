@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Calculadora;
 using Calculadora.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -17,7 +18,7 @@ namespace Calculadora.tests
 
         [TestMethod]
         [DynamicData(nameof(SubstractData))]
-        public void VerifySubstractOfTwoIntegerNumbers(int id, string firstNumber, string secondNumber, string expectedSubstract)
+        public void VerifySubstractOfTwoIntegerNumbers(int id, string firstNumber, string secondNumber, string expectedSubstract, string expectedUndo)
         {
             var resultOfSubstract = new Substract(int.Parse(firstNumber), int.Parse(secondNumber)).Perform();
 
@@ -26,19 +27,15 @@ namespace Calculadora.tests
 
 
         [TestMethod]
-        public void VerifyUndoOfASubstractOfPositiveNumbers()
+        [DynamicData(nameof(SubstractData))]
+        public void VerifyUndoOfASubstractOfPositiveNumbers(int id, string firstNumber, string secondNumber, string expectedSubstract, string expectedUndo)
         {
-            var expectedSubstract = 1;
-            var expectedUndo = 2;
-            var firstNumber = 2;
-            var secondNumber = 1;
+            var Substract = new Substract(int.Parse(firstNumber), int.Parse(secondNumber));
+            var resultOfSubstract = Substract.Perform();
+            var resultOfUndo = Substract.Undo();
 
-            var SubstractToTest = new Substract(firstNumber, secondNumber);
-            var resultOfSubstract = SubstractToTest.Perform();
-            var resultOfUndo = SubstractToTest.Undo();
-
-            Assert.AreEqual(expectedSubstract, resultOfSubstract, $"The Expected result of Substract should be {expectedSubstract} But it was: {resultOfSubstract}");
-            Assert.AreEqual(expectedUndo, resultOfUndo, $"The Expected result of Undo in Substract should be {expectedUndo} But it was: {resultOfUndo}");
+            Assert.AreEqual(int.Parse(expectedSubstract), resultOfSubstract, $"The Expected result of Substract should be {expectedSubstract} But it was: {resultOfSubstract}");
+            Assert.AreEqual(int.Parse(expectedUndo), resultOfUndo, $"The Expected result of Undo in Substract should be {expectedUndo} But it was: {resultOfUndo}");
         }
     }
 

@@ -18,7 +18,7 @@ namespace Calculadora.tests
 
         [TestMethod]
         [DynamicData(nameof(MultiplyData))]
-        public void VerifyMultiplyOfTwoIntegerNumbers(int id, string firstNumber, string secondNumber, string expectedMultiply)
+        public void VerifyMultiplyOfTwoIntegerNumbers(int id, string firstNumber, string secondNumber, string expectedMultiply, string expectedUndo)
         {
             var resultOfMultiply = new Multiply(int.Parse(firstNumber), int.Parse(secondNumber)).Perform();
 
@@ -28,19 +28,15 @@ namespace Calculadora.tests
 
 
         [TestMethod]
-        public void VerifyUndoOfAMultiplyOfPositiveNumbers()
+        [DynamicData(nameof(MultiplyData))]
+        public void VerifyUndoOfAMultiplyOfPositiveNumbers(int id, string firstNumber, string secondNumber, string expectedMultiply, string expectedUndo)
         {
-            var expectedMultiply = 2;
-            var expectedUndo = 1;
-            var firstNumber = 1;
-            var secondNumber = 2;
+            var multiply = new Multiply(int.Parse(firstNumber), int.Parse(secondNumber));
+            var resultOfMultiply = multiply.Perform();
+            var resultOfUndo = multiply.Undo();
 
-            var multiplyToTest = new Multiply(firstNumber, secondNumber);
-            var resultOfMultiply = multiplyToTest.Perform();
-            var resultOfUndo = multiplyToTest.Undo();
-
-            Assert.AreEqual(expectedMultiply, resultOfMultiply, $"The Expected result of Multiply should be {expectedMultiply} But it was: {resultOfMultiply}");
-            Assert.AreEqual(expectedUndo, resultOfUndo, $"The Expected result of Undo in Multiply should be {expectedUndo} But it was: {resultOfUndo}");
+            Assert.AreEqual(int.Parse(expectedMultiply), resultOfMultiply, $"The Expected result of Multiply should be {expectedMultiply} But it was: {resultOfMultiply}");
+            Assert.AreEqual(int.Parse(expectedUndo), resultOfUndo, $"The Expected result of Undo in Multiply should be {expectedUndo} But it was: {resultOfUndo}");
         }
     }
 
